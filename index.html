@@ -1,170 +1,428 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My AI Agent</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My AI Agent Factory</title>
 
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #222;
-    }
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0b1020;
+  color:#fff;
+}
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:18px;
+}
+header{
+  text-align:center;
+  padding:20px 0;
+}
+h1{margin:0;font-size:28px}
+.subtitle{color:#9ca3af;margin-top:8px}
 
-    .container {
-      max-width: 700px;
-      margin: auto;
-      padding: 20px;
-    }
+.status{
+  display:inline-block;
+  margin-top:15px;
+  padding:7px 14px;
+  border-radius:20px;
+  background:#12351f;
+  color:#4ade80;
+  font-size:14px;
+}
 
-    h1 {
-      text-align: center;
-    }
+.card{
+  background:#151b2e;
+  border:1px solid #252d45;
+  border-radius:18px;
+  padding:18px;
+  margin-top:18px;
+}
 
-    .status {
-      text-align: center;
-      color: #18a558;
-      margin-bottom: 20px;
-    }
+textarea{
+  width:100%;
+  min-height:130px;
+  background:#0d1324;
+  color:white;
+  border:1px solid #303951;
+  border-radius:12px;
+  padding:15px;
+  font-size:16px;
+  resize:vertical;
+}
 
-    textarea {
-      width: 100%;
-      height: 150px;
-      padding: 15px;
-      box-sizing: border-box;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      font-size: 16px;
-      resize: vertical;
-    }
+button{
+  border:0;
+  border-radius:12px;
+  padding:14px 18px;
+  font-size:15px;
+  cursor:pointer;
+}
 
-    button {
-      width: 100%;
-      padding: 15px;
-      margin-top: 12px;
-      border: none;
-      border-radius: 12px;
-      font-size: 16px;
-      cursor: pointer;
-    }
+.run{
+  width:100%;
+  margin-top:12px;
+  background:#6366f1;
+  color:white;
+  font-weight:bold;
+}
 
-    #run {
-      background: #111827;
-      color: white;
-    }
+.clear{
+  width:100%;
+  margin-top:8px;
+  background:#252d45;
+  color:#ddd;
+}
 
-    #clear {
-      background: #e5e7eb;
-    }
+h2{
+  font-size:18px;
+  margin-top:0;
+}
 
-    .result {
-      margin-top: 25px;
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      white-space: pre-wrap;
-      line-height: 1.7;
-      min-height: 100px;
-    }
-  </style>
+.employees{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.employee{
+  background:#0d1324;
+  border:1px solid #252d45;
+  border-radius:14px;
+  padding:14px;
+}
+
+.employee .icon{
+  font-size:26px;
+}
+
+.employee .name{
+  font-weight:bold;
+  margin-top:6px;
+}
+
+.employee .job{
+  color:#9ca3af;
+  font-size:13px;
+  margin-top:4px;
+}
+
+.waiting{
+  color:#9ca3af;
+}
+
+.working{
+  color:#facc15;
+}
+
+.done{
+  color:#4ade80;
+}
+
+.result{
+  background:#0d1324;
+  border-radius:12px;
+  padding:15px;
+  min-height:130px;
+  white-space:pre-wrap;
+  line-height:1.7;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:10px;
+}
+
+.actions button{
+  flex:1;
+  background:#252d45;
+  color:white;
+}
+
+.history-item{
+  padding:12px;
+  border-bottom:1px solid #252d45;
+}
+
+.history-item:last-child{
+  border-bottom:0;
+}
+
+.small{
+  color:#9ca3af;
+  font-size:12px;
+}
+
+@media(max-width:600px){
+  .employees{
+    grid-template-columns:1fr;
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="container">
 
-  <h1>🤖 My AI Agent</h1>
+<header>
+  <h1>🤖 My AI Agent Factory</h1>
+  <div class="subtitle">AI社員があなたの指示を処理します</div>
+  <div class="status" id="status">● システム準備完了</div>
+</header>
 
-  <div class="status">● 準備完了</div>
+<div class="card">
+  <h2>🎯 AIへの指示</h2>
 
   <textarea
     id="instruction"
-    placeholder="AIにやってほしいことを書いてください。&#10;&#10;例：中学生向けのnote記事を作って"
+    placeholder="例：中学生向けのnote記事を作って&#10;&#10;AI社員が企画→記事作成→チェックを行います。"
   ></textarea>
 
-  <button id="run">🚀 エージェントを実行</button>
+  <button class="run" id="run">
+    🚀 AI社員を稼働させる
+  </button>
 
-  <button id="clear">クリア</button>
+  <button class="clear" id="clear">
+    クリア
+  </button>
+</div>
+
+<div class="card">
+  <h2>👨‍💻 AI社員</h2>
+
+  <div class="employees">
+
+    <div class="employee">
+      <div class="icon">🧠</div>
+      <div class="name">企画社員</div>
+      <div class="job">テーマ・構成を考える</div>
+      <div id="e1" class="waiting">待機中</div>
+    </div>
+
+    <div class="employee">
+      <div class="icon">✍️</div>
+      <div class="name">ライター社員</div>
+      <div class="job">記事を作成する</div>
+      <div id="e2" class="waiting">待機中</div>
+    </div>
+
+    <div class="employee">
+      <div class="icon">🔍</div>
+      <div class="name">チェック社員</div>
+      <div class="job">内容を確認する</div>
+      <div id="e3" class="waiting">待機中</div>
+    </div>
+
+    <div class="employee">
+      <div class="icon">📱</div>
+      <div class="name">SNS社員</div>
+      <div class="job">投稿用に整理する</div>
+      <div id="e4" class="waiting">待機中</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="card">
+  <h2>📝 作業結果</h2>
 
   <div class="result" id="result">
-    ここにAIの結果が表示されます。
+まだ作業は開始されていません。
   </div>
+
+  <div class="actions">
+    <button id="copy">📋 コピー</button>
+    <button id="save">💾 保存</button>
+  </div>
+</div>
+
+<div class="card">
+  <h2>📚 作業履歴</h2>
+
+  <div id="history">
+    <div class="small">まだ履歴はありません。</div>
+  </div>
+</div>
 
 </div>
 
 <script>
 
-const WORKER_URL =
-  "https://my-ai-agent-server.narayamatomoki.workers.dev";
-
 const instruction = document.getElementById("instruction");
 const result = document.getElementById("result");
-const runButton = document.getElementById("run");
-const clearButton = document.getElementById("clear");
+const status = document.getElementById("status");
 
-runButton.addEventListener("click", async () => {
+const employees = [
+  document.getElementById("e1"),
+  document.getElementById("e2"),
+  document.getElementById("e3"),
+  document.getElementById("e4")
+];
+
+const run = document.getElementById("run");
+const clear = document.getElementById("clear");
+const copy = document.getElementById("copy");
+const save = document.getElementById("save");
+const history = document.getElementById("history");
+
+let historyData =
+  JSON.parse(localStorage.getItem("aiAgentHistory") || "[]");
+
+function wait(ms){
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function setEmployee(index, text, type){
+  employees[index].textContent = text;
+  employees[index].className = type;
+}
+
+run.addEventListener("click", async () => {
 
   const text = instruction.value.trim();
 
-  if (!text) {
+  if(!text){
     result.textContent = "まずAIへの指示を入力してください。";
     return;
   }
 
-  runButton.disabled = true;
-  runButton.textContent = "⏳ AIが実行中...";
-  result.textContent = "AIに指示を送っています...";
+  run.disabled = true;
+  status.textContent = "● AI社員が作業中...";
+  status.style.color = "#facc15";
 
-  try {
+  result.textContent = "AI社員が作業を開始しました...";
 
-    const response = await fetch(WORKER_URL, {
-      method: "POST",
+  employees.forEach((e) => {
+    e.textContent = "待機中";
+    e.className = "waiting";
+  });
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+  setEmployee(0,"作業中...","working");
+  result.textContent = "🧠 企画社員が指示を分析しています...";
+  await wait(1000);
 
-      body: JSON.stringify({
-        instruction: text
-      })
-    });
+  setEmployee(0,"完了","done");
+  setEmployee(1,"作業中...","working");
+  result.textContent = "✍️ ライター社員が記事を作成しています...";
+  await wait(1000);
 
-    const data = await response.json();
+  setEmployee(1,"完了","done");
+  setEmployee(2,"作業中...","working");
+  result.textContent = "🔍 チェック社員が内容を確認しています...";
+  await wait(1000);
 
-    if (!response.ok || !data.ok) {
-      result.textContent =
-        "エラーが発生しました。\n\n" +
-        JSON.stringify(data, null, 2);
-      return;
-    }
+  setEmployee(2,"完了","done");
+  setEmployee(3,"作業中...","working");
+  result.textContent = "📱 SNS社員が投稿用に整理しています...";
+  await wait(1000);
 
-    const output =
-      data.result?.output_text ||
-      JSON.stringify(data.result, null, 2);
+  setEmployee(3,"完了","done");
 
-    result.textContent = output;
+  const demoResult =
+`【AI社員Factory】
 
-  } catch (error) {
+依頼内容：
+${text}
 
-    result.textContent =
-      "サーバーに接続できませんでした。\n\n" +
-      error.message;
+作業ステータス：
+✅ 企画
+✅ 記事作成
+✅ 内容チェック
+✅ SNS用整理
 
-  } finally {
+現在はAPIクレジットなしのデモモードです。
 
-    runButton.disabled = false;
-    runButton.textContent = "🚀 エージェントを実行";
+OpenAI APIを再接続すると、
+この部分をAIが実際に生成する仕組みにできます。`;
 
+  result.textContent = demoResult;
+
+  historyData.unshift({
+    instruction:text,
+    result:demoResult,
+    time:new Date().toLocaleString("ja-JP")
+  });
+
+  historyData = historyData.slice(0,10);
+
+  localStorage.setItem(
+    "aiAgentHistory",
+    JSON.stringify(historyData)
+  );
+
+  renderHistory();
+
+  status.textContent = "● 作業完了";
+  status.style.color = "#4ade80";
+
+  run.disabled = false;
+});
+
+clear.addEventListener("click", () => {
+  instruction.value = "";
+  result.textContent = "まだ作業は開始されていません。";
+
+  employees.forEach((e) => {
+    e.textContent = "待機中";
+    e.className = "waiting";
+  });
+
+  status.textContent = "● システム準備完了";
+  status.style.color = "#4ade80";
+});
+
+copy.addEventListener("click", async () => {
+
+  if(!result.textContent.trim()){
+    return;
   }
 
+  await navigator.clipboard.writeText(result.textContent);
+
+  copy.textContent = "✅ コピーしました";
+
+  setTimeout(() => {
+    copy.textContent = "📋 コピー";
+  },1500);
 });
 
-clearButton.addEventListener("click", () => {
-  instruction.value = "";
-  result.textContent = "ここにAIの結果が表示されます。";
+save.addEventListener("click", () => {
+
+  localStorage.setItem(
+    "aiAgentLastResult",
+    result.textContent
+  );
+
+  save.textContent = "✅ 保存しました";
+
+  setTimeout(() => {
+    save.textContent = "💾 保存";
+  },1500);
 });
+
+function renderHistory(){
+
+  if(historyData.length === 0){
+    history.innerHTML =
+      '<div class="small">まだ履歴はありません。</div>';
+    return;
+  }
+
+  history.innerHTML = historyData.map(item => `
+    <div class="history-item">
+      <div>${item.instruction}</div>
+      <div class="small">${item.time}</div>
+    </div>
+  `).join("");
+}
+
+renderHistory();
 
 </script>
 
