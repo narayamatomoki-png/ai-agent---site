@@ -7,23 +7,34 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,sans-serif;
-  background:#0b1020;
+  background:#080d1a;
   color:#fff;
 }
+
 .container{
   max-width:900px;
   margin:auto;
   padding:18px;
 }
+
 header{
   text-align:center;
-  padding:20px 0;
+  padding:25px 0;
 }
-h1{margin:0;font-size:28px}
-.subtitle{color:#9ca3af;margin-top:8px}
+
+h1{
+  margin:0;
+  font-size:29px;
+}
+
+.subtitle{
+  color:#9ca3af;
+  margin-top:8px;
+}
 
 .status{
   display:inline-block;
@@ -36,19 +47,24 @@ h1{margin:0;font-size:28px}
 }
 
 .card{
-  background:#151b2e;
-  border:1px solid #252d45;
+  background:#121a2d;
+  border:1px solid #27314a;
   border-radius:18px;
   padding:18px;
   margin-top:18px;
 }
 
+h2{
+  font-size:18px;
+  margin-top:0;
+}
+
 textarea{
   width:100%;
   min-height:130px;
-  background:#0d1324;
+  background:#090f1e;
   color:white;
-  border:1px solid #303951;
+  border:1px solid #303b57;
   border-radius:12px;
   padding:15px;
   font-size:16px;
@@ -74,13 +90,8 @@ button{
 .clear{
   width:100%;
   margin-top:8px;
-  background:#252d45;
+  background:#252f48;
   color:#ddd;
-}
-
-h2{
-  font-size:18px;
-  margin-top:0;
 }
 
 .employees{
@@ -90,22 +101,22 @@ h2{
 }
 
 .employee{
-  background:#0d1324;
-  border:1px solid #252d45;
+  background:#090f1e;
+  border:1px solid #27314a;
   border-radius:14px;
-  padding:14px;
+  padding:15px;
 }
 
-.employee .icon{
-  font-size:26px;
+.icon{
+  font-size:27px;
 }
 
-.employee .name{
+.name{
   font-weight:bold;
-  margin-top:6px;
+  margin-top:7px;
 }
 
-.employee .job{
+.job{
   color:#9ca3af;
   font-size:13px;
   margin-top:4px;
@@ -113,23 +124,26 @@ h2{
 
 .waiting{
   color:#9ca3af;
+  margin-top:8px;
 }
 
 .working{
   color:#facc15;
+  margin-top:8px;
 }
 
 .done{
   color:#4ade80;
+  margin-top:8px;
 }
 
 .result{
-  background:#0d1324;
+  background:#090f1e;
   border-radius:12px;
-  padding:15px;
-  min-height:130px;
+  padding:17px;
+  min-height:180px;
   white-space:pre-wrap;
-  line-height:1.7;
+  line-height:1.8;
 }
 
 .actions{
@@ -140,13 +154,13 @@ h2{
 
 .actions button{
   flex:1;
-  background:#252d45;
+  background:#252f48;
   color:white;
 }
 
 .history-item{
-  padding:12px;
-  border-bottom:1px solid #252d45;
+  padding:13px 0;
+  border-bottom:1px solid #27314a;
 }
 
 .history-item:last-child{
@@ -156,6 +170,15 @@ h2{
 .small{
   color:#9ca3af;
   font-size:12px;
+}
+
+.badge{
+  display:inline-block;
+  background:#252f48;
+  padding:5px 9px;
+  border-radius:8px;
+  font-size:12px;
+  margin-top:8px;
 }
 
 @media(max-width:600px){
@@ -172,255 +195,516 @@ h2{
 
 <header>
   <h1>🤖 My AI Agent Factory</h1>
-  <div class="subtitle">AI社員があなたの指示を処理します</div>
-  <div class="status" id="status">● システム準備完了</div>
+  <div class="subtitle">
+    あなたの指示からコンテンツを作るAI社員チーム
+  </div>
+
+  <div class="status" id="status">
+    ● システム準備完了
+  </div>
 </header>
 
+
 <div class="card">
-  <h2>🎯 AIへの指示</h2>
 
-  <textarea
-    id="instruction"
-    placeholder="例：中学生向けのnote記事を作って&#10;&#10;AI社員が企画→記事作成→チェックを行います。"
-  ></textarea>
+<h2>🎯 AIへの指示</h2>
 
-  <button class="run" id="run">
-    🚀 AI社員を稼働させる
-  </button>
+<textarea
+id="instruction"
+placeholder="例：中学生向けのAIについてのnote記事を作って"
+></textarea>
 
-  <button class="clear" id="clear">
-    クリア
-  </button>
+<button class="run" id="run">
+🚀 AI社員を稼働させる
+</button>
+
+<button class="clear" id="clear">
+クリア
+</button>
+
 </div>
 
+
 <div class="card">
-  <h2>👨‍💻 AI社員</h2>
 
-  <div class="employees">
+<h2>👨‍💻 AI社員チーム</h2>
 
-    <div class="employee">
-      <div class="icon">🧠</div>
-      <div class="name">企画社員</div>
-      <div class="job">テーマ・構成を考える</div>
-      <div id="e1" class="waiting">待機中</div>
-    </div>
+<div class="employees">
 
-    <div class="employee">
-      <div class="icon">✍️</div>
-      <div class="name">ライター社員</div>
-      <div class="job">記事を作成する</div>
-      <div id="e2" class="waiting">待機中</div>
-    </div>
-
-    <div class="employee">
-      <div class="icon">🔍</div>
-      <div class="name">チェック社員</div>
-      <div class="job">内容を確認する</div>
-      <div id="e3" class="waiting">待機中</div>
-    </div>
-
-    <div class="employee">
-      <div class="icon">📱</div>
-      <div class="name">SNS社員</div>
-      <div class="job">投稿用に整理する</div>
-      <div id="e4" class="waiting">待機中</div>
-    </div>
-
-  </div>
+<div class="employee">
+<div class="icon">🧠</div>
+<div class="name">企画社員</div>
+<div class="job">テーマ・構成を考える</div>
+<div id="e1" class="waiting">待機中</div>
 </div>
 
-<div class="card">
-  <h2>📝 作業結果</h2>
+<div class="employee">
+<div class="icon">✍️</div>
+<div class="name">ライター社員</div>
+<div class="job">記事を作成する</div>
+<div id="e2" class="waiting">待機中</div>
+</div>
 
-  <div class="result" id="result">
+<div class="employee">
+<div class="icon">🔍</div>
+<div class="name">チェック社員</div>
+<div class="job">記事を確認する</div>
+<div id="e3" class="waiting">待機中</div>
+</div>
+
+<div class="employee">
+<div class="icon">📱</div>
+<div class="name">SNS社員</div>
+<div class="job">SNS投稿を作る</div>
+<div id="e4" class="waiting">待機中</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="card">
+
+<h2>📝 作業結果</h2>
+
+<div class="result" id="result">
 まだ作業は開始されていません。
-  </div>
-
-  <div class="actions">
-    <button id="copy">📋 コピー</button>
-    <button id="save">💾 保存</button>
-  </div>
 </div>
+
+<div class="actions">
+
+<button id="copy">
+📋 コピー
+</button>
+
+<button id="save">
+💾 保存
+</button>
+
+</div>
+
+</div>
+
 
 <div class="card">
-  <h2>📚 作業履歴</h2>
 
-  <div id="history">
-    <div class="small">まだ履歴はありません。</div>
-  </div>
+<h2>📚 作業履歴</h2>
+
+<div id="history">
+<div class="small">
+まだ履歴はありません。
+</div>
 </div>
 
 </div>
+
+</div>
+
 
 <script>
 
-const instruction = document.getElementById("instruction");
-const result = document.getElementById("result");
-const status = document.getElementById("status");
+const instruction =
+document.getElementById("instruction");
+
+const result =
+document.getElementById("result");
+
+const status =
+document.getElementById("status");
+
+const run =
+document.getElementById("run");
+
+const clear =
+document.getElementById("clear");
+
+const copy =
+document.getElementById("copy");
+
+const save =
+document.getElementById("save");
+
+const history =
+document.getElementById("history");
 
 const employees = [
-  document.getElementById("e1"),
-  document.getElementById("e2"),
-  document.getElementById("e3"),
-  document.getElementById("e4")
+document.getElementById("e1"),
+document.getElementById("e2"),
+document.getElementById("e3"),
+document.getElementById("e4")
 ];
 
-const run = document.getElementById("run");
-const clear = document.getElementById("clear");
-const copy = document.getElementById("copy");
-const save = document.getElementById("save");
-const history = document.getElementById("history");
-
 let historyData =
-  JSON.parse(localStorage.getItem("aiAgentHistory") || "[]");
+JSON.parse(
+localStorage.getItem("aiAgentHistory") || "[]"
+);
+
 
 function wait(ms){
-  return new Promise(resolve => setTimeout(resolve, ms));
+return new Promise(
+resolve => setTimeout(resolve,ms)
+);
 }
 
-function setEmployee(index, text, type){
-  employees[index].textContent = text;
-  employees[index].className = type;
+
+function setEmployee(index,text,type){
+
+employees[index].textContent = text;
+
+employees[index].className = type;
+
 }
 
-run.addEventListener("click", async () => {
 
-  const text = instruction.value.trim();
+function createDemoArticle(text){
 
-  if(!text){
-    result.textContent = "まずAIへの指示を入力してください。";
-    return;
-  }
+return `【note記事 完成プレビュー】
 
-  run.disabled = true;
-  status.textContent = "● AI社員が作業中...";
-  status.style.color = "#facc15";
+━━━━━━━━━━━━━━
 
-  result.textContent = "AI社員が作業を開始しました...";
+📌 タイトル
 
-  employees.forEach((e) => {
-    e.textContent = "待機中";
-    e.className = "waiting";
-  });
+中学生でもわかる！
+${text.replace("作って","")}の基本
 
-  setEmployee(0,"作業中...","working");
-  result.textContent = "🧠 企画社員が指示を分析しています...";
-  await wait(1000);
+━━━━━━━━━━━━━━
 
-  setEmployee(0,"完了","done");
-  setEmployee(1,"作業中...","working");
-  result.textContent = "✍️ ライター社員が記事を作成しています...";
-  await wait(1000);
+🎯 読者
 
-  setEmployee(1,"完了","done");
-  setEmployee(2,"作業中...","working");
-  result.textContent = "🔍 チェック社員が内容を確認しています...";
-  await wait(1000);
+AIや新しい技術に興味がある中学生
 
-  setEmployee(2,"完了","done");
-  setEmployee(3,"作業中...","working");
-  result.textContent = "📱 SNS社員が投稿用に整理しています...";
-  await wait(1000);
+━━━━━━━━━━━━━━
 
-  setEmployee(3,"完了","done");
+📝 はじめに
 
-  const demoResult =
-`【AI社員Factory】
+最近、AIという言葉を聞く機会が増えています。
 
-依頼内容：
-${text}
+学校やニュース、SNSなど、
+さまざまな場所でAIが使われるようになりました。
 
-作業ステータス：
-✅ 企画
-✅ 記事作成
-✅ 内容チェック
-✅ SNS用整理
+この記事では、AIについて
+中学生でもわかりやすいように紹介します。
 
-現在はAPIクレジットなしのデモモードです。
+━━━━━━━━━━━━━━
 
-OpenAI APIを再接続すると、
-この部分をAIが実際に生成する仕組みにできます。`;
+📖 第1章
+AIって何？
 
-  result.textContent = demoResult;
+AIとは、人間が行っているような
+「考える」「文章を作る」「画像を認識する」
+などの作業をコンピューターに行わせる技術です。
 
-  historyData.unshift({
-    instruction:text,
-    result:demoResult,
-    time:new Date().toLocaleString("ja-JP")
-  });
+━━━━━━━━━━━━━━
 
-  historyData = historyData.slice(0,10);
+📖 第2章
+AIで何ができる？
 
-  localStorage.setItem(
-    "aiAgentHistory",
-    JSON.stringify(historyData)
-  );
+AIを使うと、
 
-  renderHistory();
+・文章を作る
+・アイデアを考える
+・勉強をサポートする
+・画像を作る
+・動画の台本を作る
 
-  status.textContent = "● 作業完了";
-  status.style.color = "#4ade80";
+など、さまざまなことができます。
 
-  run.disabled = false;
+━━━━━━━━━━━━━━
+
+📖 第3章
+AIを使うときに大切なこと
+
+AIの答えが必ず正しいとは限りません。
+
+そのため、
+
+「AIが言ったから正しい」
+
+と考えるのではなく、
+自分でも情報を確認することが大切です。
+
+━━━━━━━━━━━━━━
+
+📌 まとめ
+
+AIは、使い方次第で
+勉強や創作を助けてくれる便利な道具です。
+
+大切なのは、
+AIに全部任せるのではなく、
+自分の考えと組み合わせて使うことです。
+
+━━━━━━━━━━━━━━
+
+📱 SNS投稿文
+
+「AIって何ができるの？」
+
+そんな疑問を持つ中学生向けに、
+AIの基本をわかりやすくまとめました！
+
+勉強や文章作成など、
+AIにはいろいろな使い道があります。
+
+#AI
+#中学生
+#note
+#勉強
+
+━━━━━━━━━━━━━━
+
+🔍 チェック結果
+
+✅ 読みやすさ
+✅ 中学生向けの表現
+✅ 記事構成
+✅ SNS投稿文
+
+※現在はAPIなしのデモ生成です。
+`;
+}
+
+
+run.addEventListener("click",async()=>{
+
+const text =
+instruction.value.trim();
+
+if(!text){
+
+result.textContent =
+"まずAIへの指示を入力してください。";
+
+return;
+
+}
+
+
+run.disabled = true;
+
+status.textContent =
+"● AI社員が作業中...";
+
+status.style.color =
+"#facc15";
+
+
+employees.forEach(e=>{
+e.textContent="待機中";
+e.className="waiting";
 });
 
-clear.addEventListener("click", () => {
-  instruction.value = "";
-  result.textContent = "まだ作業は開始されていません。";
 
-  employees.forEach((e) => {
-    e.textContent = "待機中";
-    e.className = "waiting";
-  });
+setEmployee(
+0,
+"分析中...",
+"working"
+);
 
-  status.textContent = "● システム準備完了";
-  status.style.color = "#4ade80";
+result.textContent =
+"🧠 企画社員が指示を分析しています...";
+
+await wait(1000);
+
+
+setEmployee(
+0,
+"完了",
+"done"
+);
+
+setEmployee(
+1,
+"執筆中...",
+"working"
+);
+
+result.textContent =
+"✍️ ライター社員が記事を作成しています...";
+
+await wait(1200);
+
+
+setEmployee(
+1,
+"完了",
+"done"
+);
+
+setEmployee(
+2,
+"チェック中...",
+"working"
+);
+
+result.textContent =
+"🔍 チェック社員が記事を確認しています...";
+
+await wait(1000);
+
+
+setEmployee(
+2,
+"完了",
+"done"
+);
+
+setEmployee(
+3,
+"作成中...",
+"working"
+);
+
+result.textContent =
+"📱 SNS社員が投稿文を作っています...";
+
+await wait(1000);
+
+
+setEmployee(
+3,
+"完了",
+"done"
+);
+
+
+const article =
+createDemoArticle(text);
+
+result.textContent =
+article;
+
+
+historyData.unshift({
+
+instruction:text,
+
+result:article,
+
+time:new Date()
+.toLocaleString("ja-JP")
+
 });
 
-copy.addEventListener("click", async () => {
 
-  if(!result.textContent.trim()){
-    return;
-  }
+historyData =
+historyData.slice(0,10);
 
-  await navigator.clipboard.writeText(result.textContent);
 
-  copy.textContent = "✅ コピーしました";
+localStorage.setItem(
+"aiAgentHistory",
+JSON.stringify(historyData)
+);
 
-  setTimeout(() => {
-    copy.textContent = "📋 コピー";
-  },1500);
+
+renderHistory();
+
+
+status.textContent =
+"● 作業完了";
+
+status.style.color =
+"#4ade80";
+
+
+run.disabled=false;
+
 });
 
-save.addEventListener("click", () => {
 
-  localStorage.setItem(
-    "aiAgentLastResult",
-    result.textContent
-  );
+clear.addEventListener(
+"click",
+()=>{
 
-  save.textContent = "✅ 保存しました";
+instruction.value="";
 
-  setTimeout(() => {
-    save.textContent = "💾 保存";
-  },1500);
+result.textContent =
+"まだ作業は開始されていません。";
+
+employees.forEach(e=>{
+e.textContent="待機中";
+e.className="waiting";
 });
+
+status.textContent =
+"● システム準備完了";
+
+status.style.color =
+"#4ade80";
+
+}
+);
+
+
+copy.addEventListener(
+"click",
+async()=>{
+
+await navigator.clipboard
+.writeText(result.textContent);
+
+copy.textContent =
+"✅ コピーしました";
+
+setTimeout(()=>{
+copy.textContent="📋 コピー";
+},1500);
+
+}
+);
+
+
+save.addEventListener(
+"click",
+()=>{
+
+localStorage.setItem(
+"aiAgentLastResult",
+result.textContent
+);
+
+save.textContent =
+"✅ 保存しました";
+
+setTimeout(()=>{
+save.textContent="💾 保存";
+},1500);
+
+}
+);
+
 
 function renderHistory(){
 
-  if(historyData.length === 0){
-    history.innerHTML =
-      '<div class="small">まだ履歴はありません。</div>';
-    return;
-  }
+if(historyData.length===0){
 
-  history.innerHTML = historyData.map(item => `
-    <div class="history-item">
-      <div>${item.instruction}</div>
-      <div class="small">${item.time}</div>
-    </div>
-  `).join("");
+history.innerHTML =
+'<div class="small">まだ履歴はありません。</div>';
+
+return;
+
 }
+
+
+history.innerHTML =
+historyData.map(item=>`
+
+<div class="history-item">
+
+<div>
+📝 ${item.instruction}
+</div>
+
+<div class="small">
+${item.time}
+</div>
+
+</div>
+
+`).join("");
+
+}
+
 
 renderHistory();
 
